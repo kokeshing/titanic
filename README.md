@@ -8,6 +8,8 @@
 - sibsp (10で割る)
 - parch (10で割る)
 - fare (logを取ってから0-1正規化 最大512.3292 最少0.0 logを取る時0は0のままにしておく)
+- Embarked(C=0.0 Q=0.5 S=1.0)
+
 
 ## Data argumentation
 
@@ -22,7 +24,7 @@ Pclass         False
 Name           False
 Sex            False
 Age             True
-SibSp          False
+SibSp          Falsec
 Parch          False
 Ticket         False
 Fare           False
