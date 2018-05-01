@@ -1,5 +1,6 @@
 # titanic
-
+    まだ試行錯誤中のクソザコ
+    モデル量産大会
 ## use column
 
 - Pclass (0-1正規化)
