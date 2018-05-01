@@ -9,11 +9,8 @@ from keras.layers import Input, Activation, Dropout, Flatten, Dense, BatchNormal
 
 import pandas as pd
 
-
-# 特徴の次元数
-IN_NEUR  = 4
 # バッチサイズ
-BATCH_NM = 32
+BATCH_NM = 20
 # エポック数
 EPOCH_NM = 1000
 log_filepath = './log/'
@@ -31,44 +28,53 @@ def create_model():
     # Model
     model = Sequential()
     #input layer
-    model.add(Dense(6, input_shape=(6,)))
+    model.add(Dense(7, input_shape=(7,)))
     model.add(BatchNormalization())
     model.add(Activation("relu"))
 
     # hidden layers
-    model.add(Dense(6))
+    model.add(Dense(7))
     model.add(BatchNormalization())
     model.add(Activation("sigmoid"))
 
-    model.add(Dense(6))
+    model.add(Dense(7))
     model.add(BatchNormalization())
     model.add(Activation("sigmoid"))
 
-    model.add(Dense(3))
+    model.add(Dense(7))
+    model.add(BatchNormalization())
+    model.add(Activation("sigmoid"))
+
+    model.add(Dense(7))
+    model.add(BatchNormalization())
+    model.add(Activation("sigmoid"))
+
+    model.add(Dense(7))
     model.add(BatchNormalization())
     model.add(Activation("sigmoid"))
 
     # output layer
     model.add(Dense(1, activation='sigmoid'))
     model.compile(loss='binary_crossentropy',
-                  optimizer=optimizers.Adam(lr=0.5),
+                  optimizer=optimizers.SGD(lr=0.36, momentum=0.3),
                   metrics=['accuracy'])
     return model
 
 def mktraindata():
-    df = pd.read_csv("usetrain.csv")
+    df = pd.read_csv("usetrain2.csv")
     survived_train = []
     unsurvived_train = []
     suv_num = 0
     unsuv_num = 0
 
-    pclass_arr = np.array([df.at[index, "Pclass"] for index in range(0, 714)])
-    sex_arr    = np.array([df.at[index, "Sex"] for index in range(0, 714)])
-    age_arr    = np.array([df.at[index, "Age"] / 100.0 for index in range(0, 714)])
-    sibsp_arr  = np.array([df.at[index, "SibSp"] / 10.0 for index in range(0, 714)])
-    parch_arr  = np.array([df.at[index, "Parch"] / 10.0 for index in range(0, 714)])
-    fare_arr   = np.array([np.log(df.at[index, "Fare"]) if df.at[index, "Fare"] > 0 else 0 for index in range(0, 714)])
-    class_arr  = np.array([df.at[index, "Survived"] for index in range(0, 714)])
+    pclass_arr = np.array([df.at[index, "Pclass"] for index in range(0, 712)])
+    sex_arr    = np.array([df.at[index, "Sex"] for index in range(0, 712)])
+    age_arr    = np.array([df.at[index, "Age"] / 100.0 for index in range(0, 712)])
+    sibsp_arr  = np.array([df.at[index, "SibSp"] / 10.0 for index in range(0, 712)])
+    parch_arr  = np.array([df.at[index, "Parch"] / 10.0 for index in range(0, 712)])
+    fare_arr   = np.array([np.log(df.at[index, "Fare"]) if df.at[index, "Fare"] > 0 else 0 for index in range(0, 712)])
+    embarked   = np.array([df.at[index, "Embarked"] for index in range(0, 712)])
+    class_arr  = np.array([df.at[index, "Survived"] for index in range(0, 712)])
 
     row0 = min_max_normalization(pclass_arr)
     row1 = sex_arr
@@ -76,9 +82,10 @@ def mktraindata():
     row3 = sibsp_arr
     row4 = parch_arr
     row5 = min_max_normalization(fare_arr)
+    row6 = embarked
 
-    for i in range(0,714):
-        data = np.hstack((row0[i], row1[i], row2[i], row3[i], row4[i], row5[i]))
+    for i in range(0,712):
+        data = np.hstack((row0[i], row1[i], row2[i], row3[i], row4[i], row5[i], row6[i]))
         # survived
         if (class_arr[i] == 1):
             survived_train.append(data)
