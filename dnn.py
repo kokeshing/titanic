@@ -33,15 +33,19 @@ def create_model():
     # hidden layers
     model.add(Dense(7))
     model.add(BatchNormalization())
-    model.add(Activation("relu"))
+    model.add(Activation("sigmoid"))
 
     model.add(Dense(7))
     model.add(BatchNormalization())
-    model.add(Activation("relu"))
+    model.add(Activation("sigmoid"))
 
     model.add(Dense(4))
     model.add(BatchNormalization())
-    model.add(Activation("relu"))
+    model.add(Activation("sigmoid"))
+
+    model.add(Dense(2))
+    model.add(BatchNormalization())
+    model.add(Activation("sigmoid"))
 
     # output layer
     model.add(Dense(1, activation='sigmoid'))
