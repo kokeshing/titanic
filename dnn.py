@@ -23,8 +23,6 @@ def min_max_normalization(array, axis=None):
     return result
 
 def create_model():
-    #prelu = advanced_activations.PReLU(alpha_initializer='zeros', alpha_regularizer=None, alpha_constraint=None, shared_axes=None)
-
     # Model
     model = Sequential()
     #input layer
@@ -41,30 +39,14 @@ def create_model():
     model.add(BatchNormalization())
     model.add(Activation("relu"))
 
-    model.add(Dense(7))
-    model.add(BatchNormalization())
-    model.add(Activation("relu"))
-
-    model.add(Dense(7))
-    model.add(BatchNormalization())
-    model.add(Activation("relu"))
-
-    model.add(Dense(7))
-    model.add(BatchNormalization())
-    model.add(Activation("relu"))
-
-    model.add(Dense(7))
-    model.add(BatchNormalization())
-    model.add(Activation("relu"))
-
-    model.add(Dense(7))
+    model.add(Dense(4))
     model.add(BatchNormalization())
     model.add(Activation("relu"))
 
     # output layer
     model.add(Dense(1, activation='sigmoid'))
     model.compile(loss='binary_crossentropy',
-                  optimizer=optimizers.SGD(lr=0.80, momentum=0.5),
+                  optimizer=optimizers.SGD(lr=0.80, momentum=0.1),
                   metrics=['accuracy'])
     return model
 
