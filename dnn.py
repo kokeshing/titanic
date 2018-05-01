@@ -35,28 +35,36 @@ def create_model():
     # hidden layers
     model.add(Dense(7))
     model.add(BatchNormalization())
-    model.add(Activation("sigmoid"))
+    model.add(Activation("relu"))
 
     model.add(Dense(7))
     model.add(BatchNormalization())
-    model.add(Activation("sigmoid"))
+    model.add(Activation("relu"))
 
     model.add(Dense(7))
     model.add(BatchNormalization())
-    model.add(Activation("sigmoid"))
+    model.add(Activation("relu"))
 
     model.add(Dense(7))
     model.add(BatchNormalization())
-    model.add(Activation("sigmoid"))
+    model.add(Activation("relu"))
 
     model.add(Dense(7))
     model.add(BatchNormalization())
-    model.add(Activation("sigmoid"))
+    model.add(Activation("relu"))
+
+    model.add(Dense(7))
+    model.add(BatchNormalization())
+    model.add(Activation("relu"))
+
+    model.add(Dense(7))
+    model.add(BatchNormalization())
+    model.add(Activation("relu"))
 
     # output layer
     model.add(Dense(1, activation='sigmoid'))
     model.compile(loss='binary_crossentropy',
-                  optimizer=optimizers.SGD(lr=0.36, momentum=0.3),
+                  optimizer=optimizers.SGD(lr=0.80, momentum=0.5),
                   metrics=['accuracy'])
     return model
 
@@ -141,7 +149,7 @@ if __name__=='__main__':
         epochs=EPOCH_NM,
         verbose=1,
         callbacks=[cp_cb, tb_cb, es_cb],
-        validation_split=0.2,
+        validation_split=0.25,
         shuffle=False)
 
     model.save(os.path.join(result_dir, 'trained_model.h5'))
