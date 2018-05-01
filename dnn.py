@@ -46,6 +46,7 @@ def create_model():
     model.add(Dense(2))
     model.add(BatchNormalization())
     model.add(Activation("sigmoid"))
+    model.add(Dropout(0.2))
 
     # output layer
     model.add(Dense(1, activation='sigmoid'))
