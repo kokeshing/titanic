@@ -10,7 +10,7 @@ from keras.layers import Input, Activation, Dropout, Flatten, Dense, BatchNormal
 import pandas as pd
 
 # バッチサイズ
-BATCH_NM = 20
+BATCH_NM = 32
 # エポック数
 EPOCH_NM = 1000
 log_filepath = './log/'
@@ -33,25 +33,21 @@ def create_model():
     # hidden layers
     model.add(Dense(7))
     model.add(BatchNormalization())
-    model.add(Activation("sigmoid"))
+    model.add(Activation("relu"))
 
     model.add(Dense(7))
     model.add(BatchNormalization())
-    model.add(Activation("sigmoid"))
+    model.add(Activation("relu"))
 
-    model.add(Dense(4))
+    model.add(Dense(7))
     model.add(BatchNormalization())
-    model.add(Activation("sigmoid"))
-
-    model.add(Dense(2))
-    model.add(BatchNormalization())
-    model.add(Activation("sigmoid"))
-    model.add(Dropout(0.2))
+    model.add(Activation("relu"))
+    model.add(Dropout(0.1))
 
     # output layer
     model.add(Dense(1, activation='sigmoid'))
     model.compile(loss='binary_crossentropy',
-                  optimizer=optimizers.SGD(lr=0.80, momentum=0.1),
+                  optimizer=optimizers.SGD(lr=0.60, momentum=0.05),
                   metrics=['accuracy'])
     return model
 
@@ -136,7 +132,7 @@ if __name__=='__main__':
         epochs=EPOCH_NM,
         verbose=1,
         callbacks=[cp_cb, tb_cb, es_cb],
-        validation_split=0.25,
+        validation_split=0.3,
         shuffle=False)
 
     model.save(os.path.join(result_dir, 'trained_model.h5'))
