@@ -42,6 +42,10 @@ def create_model():
     model.add(Dense(7))
     model.add(BatchNormalization())
     model.add(Activation("relu"))
+
+    model.add(Dense(7))
+    model.add(BatchNormalization())
+    model.add(Activation("relu"))
     model.add(Dropout(0.1))
 
     # output layer
